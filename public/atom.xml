@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>JellyNian&#39;s Blog</title>
+  
+  <subtitle>Golang Developer/Linux System Administrator</subtitle>
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="//jellynian.me/"/>
+  <updated>2018-03-27T08:41:23.857Z</updated>
+  <id>//jellynian.me/</id>
+  
+  <author>
+    <name>Jelly Nian</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>使用vim搭建强大的Python IDE</title>
+    <link href="//jellynian.me/2018/03/27/2018-03-02-setup-amazing-python-ide-based-on-vim/"/>
+    <id>//jellynian.me/2018/03/27/2018-03-02-setup-amazing-python-ide-based-on-vim/</id>
+    <published>2018-03-27T08:41:23.857Z</published>
+    <updated>2018-03-27T08:41:23.857Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="安装vim8"><a href="#安装vim8" class="headerlink" title="安装vim8"></a>安装vim8</h1><p>ubuntu 16.04 默认的vim为vim7，我们需要较为新的vim8 来支持更多的新特性。你可以使用命令 <code>vim --version</code> 来查看你本机的vim 版本。</p><pre><code>sudo add-apt-repository ppa:jonathonf/vim -ysudo apt updatesudo apt install vim</code></pre><p>macos 安装则使用brew即可</p><pre><code>brew install vim </code></pre><h1 id="安装vim插件管理工具-Vundle"><a href="#安装vim插件管理工具-Vundle" class="headerlink" title="安装vim插件管理工具 Vundle"></a>安装vim插件管理工具 Vundle</h1><p>管理vim插件的工具有很多，我曾经使用过的有 <a href="https://github.com/junegunn/vim-plug" target="_blank" rel="noopener">vim-plug</a> 和 Vundle 这里我们推荐<a href="https://github.com/VundleVim/Vundle.vim" target="_blank" rel="noopener">Vundle</a>.</p><p>安装Vundle</p><pre><code>git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim</code></pre><p>在 <code>~/.vimrc</code> 文件中写入如下内容,写入完毕后保存退出，后续的文章会告诉大家每一个插件的作用。</p><pre><code>set nocompatible              &quot; be iMproved, required&quot; set the runtime path to include Vundle and initializeset rtp+=~/.vim/bundle/Vundle.vimcall vundle#begin(&apos;~/.vim/bundle/&apos;)&quot; alternatively, pass a path where Vundle should install plugins&quot;call vundle#begin(&apos;~/some/path/here&apos;)&quot; let Vundle manage Vundle, requiredPlugin &apos;VundleVim/Vundle.vim&apos;                                                                                                                                                                               Plugin &apos;vim-airline/vim-airline&apos;Plugin &apos;vim-airline/vim-airline-themes&apos;Plugin &apos;scrooloose/nerdtree&apos;Plugin &apos;w0rp/ale&apos;Plugin &apos;tomasr/molokai&apos;Plugin &apos;altercation/vim-colors-solarized&apos;Plugin &apos;Valloric/YouCompleteMe&apos;Plugin &apos;jnurmine/Zenburn&apos;Plugin &apos;vim-scripts/minibufexplorerpp&apos;Plugin &apos;jistr/vim-nerdtree-tabs&apos;Plugin &apos;kien/ctrlp.vim&apos;Plugin &apos;Chiel92/vim-autoformat&apos;Plugin &apos;tell-k/vim-autopep8&apos;Plugin &apos;jiangmiao/auto-pairs&apos;Plugin &apos;scrooloose/nerdcommenter&apos;Plugin &apos;Yggdroot/indentLine&apos;&quot; All of your Plugins must be added before the following linecall vundle#end()            &quot; requiredfiletype plugin indent on    &quot; required</code></pre><p>可以看到 <code>call vundle#end()</code>  和 <code>call vundle#begin(&#39;~/.vim/bundle/&#39;)</code> 之间的内容是插件列表，这些插件的命名方式其实是 github的用户名和仓库名组成的，在vim中执行  <code>BundleInstall</code><br>命令，其实是通过git 来克隆这些仓库，来达到安装插件的目的。</p><p><img src="/img/vim-vundle.png" alt=""></p><h1 id="安装插件"><a href="#安装插件" class="headerlink" title="安装插件"></a>安装插件</h1><p>在vim中执行 <code>BundleInstall</code> Vundle插件会调用git下载列表中的插件。<br>注意 ‘Valloric/YouCompleteMe’ 插件需要下载各种依赖，可能需要花费大量的时间如果下载中断，你可以直接执行,来安装YouCompleteMe</p><pre><code>git clone --recursive https://github.com/Valloric/YouCompleteMe.git  ~/.vim/bundle/YouCompleteMegit submodule update --init --recursive   # 检查git仓库完整性</code></pre><h1 id="编译YouCompleteMe"><a href="#编译YouCompleteMe" class="headerlink" title="编译YouCompleteMe"></a>编译YouCompleteMe</h1><pre><code>cd ~/.vim/bundle/YouCompleteMesudo apt install build-essential cmake./install.py  # 如果你需要c/c++的自动提示支持，可以添加参数 --clang-completer</code></pre><h1 id="插件介绍"><a href="#插件介绍" class="headerlink" title="插件介绍"></a>插件介绍</h1><pre><code>Plugin &apos;vim-airline/vim-airline&apos;Plugin &apos;vim-airline/vim-airline-themes&apos;Plugin &apos;scrooloose/nerdtree&apos;Plugin &apos;w0rp/ale&apos;Plugin &apos;tomasr/molokai&apos;Plugin &apos;altercation/vim-colors-solarized&apos;Plugin &apos;Valloric/YouCompleteMe&apos;Plugin &apos;jnurmine/Zenburn&apos;Plugin &apos;vim-scripts/minibufexplorerpp&apos;Plugin &apos;jistr/vim-nerdtree-tabs&apos;Plugin &apos;kien/ctrlp.vim&apos;Plugin &apos;Chiel92/vim-autoformat&apos;Plugin &apos;tell-k/vim-autopep8&apos;Plugin &apos;jiangmiao/auto-pairs&apos;Plugin &apos;scrooloose/nerdcommenter&apos;Plugin &apos;Yggdroot/indentLine&apos;</code></pre><h2 id="vim-airline"><a href="#vim-airline" class="headerlink" title="vim-airline"></a>vim-airline</h2><p>这是一款漂亮底部提示条插件，拥有着漂亮的外观</p><h2 id="scrooloose-nerdtree"><a href="#scrooloose-nerdtree" class="headerlink" title="scrooloose/nerdtree"></a>scrooloose/nerdtree</h2><p>这是一款好用的文件列表插件</p><h2 id="ale"><a href="#ale" class="headerlink" title="ale"></a>ale</h2><p>这是一款语法检查插件</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;安装vim8&quot;&gt;&lt;a href=&quot;#安装vim8&quot; class=&quot;headerlink&quot; title=&quot;安装vim8&quot;&gt;&lt;/a&gt;安装vim8&lt;/h1&gt;&lt;p&gt;ubuntu 16.04 默认的vim为vim7，我们需要较为新的vim8 来支持更多的新特性。你可以使用命
+      
+    
+    </summary>
+    
+    
+      <category term="python" scheme="//jellynian.me/tags/python/"/>
+    
+      <category term="vim" scheme="//jellynian.me/tags/vim/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>docker 精简基础教程</title>
+    <link href="//jellynian.me/2018/03/27/2018-03-14-docker-simple-base-tutor/"/>
+    <id>//jellynian.me/2018/03/27/2018-03-14-docker-simple-base-tutor/</id>
+    <published>2018-03-27T08:41:23.857Z</published>
+    <updated>2018-03-27T08:41:23.857Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="安装docker"><a href="#安装docker" class="headerlink" title="安装docker"></a>安装docker</h2><blockquote><p>官方文档的参考链接 <a href="https://docs.docker.com/install/linux/docker-ce/ubuntu/#install-docker-ce-1" target="_blank" rel="noopener">https://docs.docker.com/install/linux/docker-ce/ubuntu/#install-docker-ce-1</a></p></blockquote><p> 卸载旧版本docker</p><pre><code>sudo apt-get remove docker docker-engine docker.iosudo apt install software-properties-common #安装工具</code></pre><p> 信任密钥:</p><pre><code>curl -fsSL https://mirrors.aliyun.com/docker-ce/linux/ubuntu/gpg | sudo apt-key add -</code></pre><p>添加源:</p><pre><code>sudo add-apt-repository &quot;deb [arch=amd64] https://mirrors.aliyun.com/docker-ce/linux/ubuntu  $(lsb_release -cs) stable&quot;</code></pre><p>安装docker</p><pre><code>sudo apt-get install docker-ce -y</code></pre><p>默认情况下，<code>docker</code>    命令会使用Unix    socket    与    Docker    引擎通讯。而只有<code>root</code>用户和<code>docker</code>    组的用户才可以访问    Docker    引擎的    Unix    socket。出于 安全考虑，一般    Linux    系统上不会直接使用<code>root</code>    用户。因此，更好地做法是将 需要使用    docker        的用户加入    <code>docker</code>    用户组。</p><p>如果不存在<code>docker</code>组则建立        docker        组：</p><pre><code>$    sudo groupadd docker</code></pre><p>将当前用户加入docker组：</p><pre><code>$    sudo usermod -aG docker $USER</code></pre><p>之后logout当前用户，再login 就可以使用普通用户操作docker了</p><h2 id="拉取镜像："><a href="#拉取镜像：" class="headerlink" title="拉取镜像："></a>拉取镜像：</h2><pre><code>docker pull ubuntu</code></pre><p>运行docker容器</p><pre><code>docker run -it ubuntu /bin/bash </code></pre><p>Docker    包括三个基本概念<br>镜像（Image） 容器（Container） 仓库（Repository）</p><h2 id="获取镜像"><a href="#获取镜像" class="headerlink" title="获取镜像"></a>获取镜像</h2><p>从    Docker    Registry    获取镜像的命令是        docker    pull    。其命令格式为</p><pre><code>docker    pull    [选项]    [Docker    Registry地址]&lt;仓库名&gt;:&lt;标签&gt;</code></pre><p>拉取ubuntu 16.04的镜像</p><pre><code>docker    pull    ubuntu:16.04 </code></pre><p>拉取alpine镜像</p><blockquote><p>Alpine Linux 是一个社区开发的面向安全应用的轻量级Linux发行版,只有4M左右。</p></blockquote><pre><code>docker pull alpine</code></pre><p>列出已经下载到的镜像</p><pre><code>jelly@MiWiFi-R3-srv:~$ docker imagesREPOSITORY          TAG                 IMAGE ID            CREATED             SIZEalpine              latest              3fd9065eaf02        7 weeks ago         4.15MB</code></pre><p>基本的操作</p><pre><code>docker ps # 查看当前运行中的容器docker ps -a # 查看所有的容器docker top 容器名或容器id #查看容器中运行的进程docker attach 容器名或容器id # attach 如果要正常退出不关闭容器，请按Ctrl+P+Q进行退出容器。docker exec -it 容器名或容器id /bin/bash # 以交互的方式在容器中运行一个进程</code></pre><p>使用<code>docker commit</code> 构建镜像</p><pre><code>docker run --name webserver  -d -p 80:80 nginx docker exec -it webserver /bin/bashecho &quot;&lt;h1&gt; Hello World &lt;/h1&gt;&quot; &gt; /usr/share/nginx/html/index.html</code></pre><p><code>docker commit</code> 的帮助</p><pre><code>docker commit  --helpUsage:    docker commit [OPTIONS] CONTAINER [REPOSITORY[:TAG]]Create a new image from a container&apos;s changesOptions:  -a, --author string    Author (e.g., &quot;John Hannibal Smith &lt;hannibal@a-team.com&gt;&quot;)  -c, --change list      Apply Dockerfile instruction to the created image  -m, --message string   Commit message  -p, --pause            Pause container during commit (default true)</code></pre><p>打开页面查看效果</p><pre><code>curl http://localhost:80 </code></pre><p>提交一个新镜像到本地</p><pre><code>docker commit -a &quot;jelly &lt;jelly@yunio.com&gt;&quot; -m &quot;modify index.html&quot;  webserver cagetest_helloworld:v1.0</code></pre>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;安装docker&quot;&gt;&lt;a href=&quot;#安装docker&quot; class=&quot;headerlink&quot; title=&quot;安装docker&quot;&gt;&lt;/a&gt;安装docker&lt;/h2&gt;&lt;blockquote&gt;
+&lt;p&gt;官方文档的参考链接 &lt;a href=&quot;https://docs.d
+      
+    
+    </summary>
+    
+      <category term="sysadmin" scheme="//jellynian.me/categories/sysadmin/"/>
+    
+    
+      <category term="sysadmin" scheme="//jellynian.me/tags/sysadmin/"/>
+    
+      <category term="docker" scheme="//jellynian.me/tags/docker/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>在Linux命令行如何执行上一条命令</title>
+    <link href="//jellynian.me/2018/03/27/2018-01-27-linux%E5%BF%AB%E9%80%9F%E9%87%8D%E5%A4%8D%E6%89%A7%E8%A1%8C%E4%B8%8A%E4%B8%80%E6%9D%A1%E5%91%BD%E4%BB%A4/"/>
+    <id>//jellynian.me/2018/03/27/2018-01-27-linux快速重复执行上一条命令/</id>
+    <published>2018-03-27T08:41:23.856Z</published>
+    <updated>2018-03-27T08:41:23.856Z</updated>
+    
+    <content type="html"><![CDATA[<p>有 4 种方法可以重复执行上一条命令：</p><p>使用上方向键，并回车执行。</p><p>按 !! 并回车执行。</p><p>输入 !-1 并回车执行。</p><p>按 Ctrl+P 并回车执行。</p><p>其中 !-2 代表执行上上条命令<br>!-3 代表执行上上上条命令以此类推</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;有 4 种方法可以重复执行上一条命令：&lt;/p&gt;
+&lt;p&gt;使用上方向键，并回车执行。&lt;/p&gt;
+&lt;p&gt;按 !! 并回车执行。&lt;/p&gt;
+&lt;p&gt;输入 !-1 并回车执行。&lt;/p&gt;
+&lt;p&gt;按 Ctrl+P 并回车执行。&lt;/p&gt;
+&lt;p&gt;其中 !-2 代表执行上上条命令&lt;br&gt;!-3 代表
+      
+    
+    </summary>
+    
+      <category term="sysadmin" scheme="//jellynian.me/categories/sysadmin/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Ucloud配置haproxy+keepalived(利用ucloud-API实现外网浮动IP切换)</title>
+    <link href="//jellynian.me/2018/03/27/2018-01-27-Ucloud-%E9%85%8D%E7%BD%AEhaproxy-keepalived-(%E5%88%A9%E7%94%A8ucloudAPI%E5%AE%9E%E7%8E%B0%E5%A4%96%E7%BD%91%E6%B5%AE%E5%8A%A8IP%E5%88%87%E6%8D%A2)/"/>
+    <id>//jellynian.me/2018/03/27/2018-01-27-Ucloud-配置haproxy-keepalived-(利用ucloudAPI实现外网浮动IP切换)/</id>
+    <published>2018-03-27T08:41:23.856Z</published>
+    <updated>2018-03-27T08:41:23.856Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>先交代下事情发生的背景，公司在使用ucloud的负载均衡产品的过程中由于某种特殊的需求必须要自建外网负载均衡器，由于ucloud的云主机使用nat地址转化技术，外网IP的数据包被转发到了内网IP，而且外网IP是与云主机绑定的，所以就不能用传统的方式实现外网haproxy服务的高可用了，但是ucloud实现了切换公网IP的api，我们让keepalived在另一台机器挂掉的时候调用api来将该机器的外网浮动IP解除绑定，然后绑定到自己身上，api切换的时间极短保证了线上负载均衡器故障能够迅速切换。</p><h1 id="安装keepalived"><a href="#安装keepalived" class="headerlink" title="安装keepalived"></a>安装keepalived</h1><pre><code>sudo apt update sudo apt install keepalived -y</code></pre><h1 id="准备脚本"><a href="#准备脚本" class="headerlink" title="准备脚本"></a>准备脚本</h1><h2 id="下载ucloud-sdk"><a href="#下载ucloud-sdk" class="headerlink" title="下载ucloud sdk"></a>下载ucloud sdk</h2><pre><code>git clone https://github.com/ucloud/ucloud-sdk-python.git /etc/keepalived/script #下载ucloud python sdk 到 /etc/keepalived/script目录cd /etc/keepalived/script  # 进入 script 目录 cp config.simple.py config.py   # 复制config.simple.py模板文件</code></pre><h2 id="编写脚本"><a href="#编写脚本" class="headerlink" title="编写脚本"></a>编写脚本</h2><p>修改 config.py 文件，</p><pre><code>#配置公私钥&quot;&quot;&quot;public_key  = &quot;&quot; #你的公钥private_key = &quot;&quot; #你的私钥project_id = &quot;&quot; # 项目ID 请在Dashbord 上获取&quot;&quot;&quot;#添加以下内容EIPID=&quot;eip-lb011e&quot;  #你需要浮动的EIP的IDMYUHOSTID=&quot;uhost-33eitwa&quot;  #脚本部署在这台机器的ID，可在控制台上查看 注意，你脚本部署在哪台机器这个ID就是哪台机器的IDPEERUHOSTID=&quot;uhost-333xvs&quot; # 另一台机器的ID REGION=&quot;hk&quot;  #地区 Region 可在ucloud官网查阅</code></pre><p>接下来修改 bind_eip.py 将Parameters段参照以下内容修改</p><pre><code>Parameters={    &quot;Action&quot;:&quot;BindEIP&quot;,    &quot;EIPId&quot;:EIPID,    &quot;ResourceId&quot;:MYUHOSTID,    &quot;ResourceType&quot;:&quot;uhost&quot;,    &quot;Region&quot;:REGION}</code></pre><p>修改 unbind_eip.py 将Parameters段参照以下内容修改</p><pre><code>Parameters={    &quot;Action&quot;:&quot;UnBindEIP&quot;,    &quot;EIPId&quot;:EIPID,    &quot;ResourceId&quot;:PEERUHOSTID,     &quot;ResourceType&quot;:&quot;uhost&quot;,    &quot;Region&quot;:REGION}</code></pre><p>新建脚本  slave2master.sh</p><pre><code>#!/bin/bashpython  /etc/keepalived/script/unbind_eip.py  #先把IP从故障的那台机器解绑python /etc/keepalived/script/bind_eip.py     # 再绑定到本机上</code></pre><p>编写一个故障检查脚本 check_haproxy.sh</p><pre><code>#!/bin/bashGREP_OPTIONS=&quot;&quot;Count1=`netstat -antp |grep -v grep |grep haproxy |wc -l`if [ $Count1 -eq 0  ]; thenexit 1  #keepalived 调用这个脚本，当退出值不为0就认为本机故障fiexit 0</code></pre><h1 id="编写-keepalived的配置文件"><a href="#编写-keepalived的配置文件" class="headerlink" title="编写 keepalived的配置文件"></a>编写 keepalived的配置文件</h1><h2 id="slave的配置文件参考"><a href="#slave的配置文件参考" class="headerlink" title="slave的配置文件参考"></a>slave的配置文件参考</h2><pre><code>! Configuration File for keepalivedglobal_defs {          router_id xxx-lb-test}vrrp_script chk_haproxy {        script &quot;/etc/keepalived/check_haproxy.sh&quot;         interval 2 }vrrp_instance VI_1 {    unicast_peer {        10.8.100.13    !另一台机器(master)的IP                      }        state BACKUP   !默认进入backup模式        interface eth0        virtual_router_id 194        priority 10        weight 5        !    nopreempt        advert_int 1        authentication {            auth_type PASS            auth_pass e8qvAwPTWgCEepUKCQ4tN        }        track_script {                   chk_haproxy                           }            notify_master /etc/keepalived/script/slave2master.sh   #一旦master出现故障该脚本就会被执行}</code></pre><h2 id="master的配置文件-参考"><a href="#master的配置文件-参考" class="headerlink" title="master的配置文件 参考"></a>master的配置文件 参考</h2><pre><code>! Configuration File for keepalivedglobal_defs {    router_id xxx-lb-test}vrrp_script chk_haproxy {    script &quot;/etc/keepalived/check_haproxy.sh&quot;     interval 2 }vrrp_instance VI_1 {    unicast_peer {        10.8.126.62  # Slave 的IP                }    state MASTER #默认为 MASTER    interface eth0    virtual_router_id 194    priority 100    !    nopreempt    advert_int 1    authentication {        auth_type PASS        auth_pass e8qvAwPTWgCEepUKCQ4tN        }    track_script {           chk_haproxy    }    notify_master /etc/keepalived/script/slave2master.sh #一旦slave出现故障该脚本就会被执行}</code></pre>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;背景&quot;&gt;&lt;a href=&quot;#背景&quot; class=&quot;headerlink&quot; title=&quot;背景&quot;&gt;&lt;/a&gt;背景&lt;/h1&gt;&lt;p&gt;先交代下事情发生的背景，公司在使用ucloud的负载均衡产品的过程中由于某种特殊的需求必须要自建外网负载均衡器，由于ucloud的云主机使用
+      
+    
+    </summary>
+    
+      <category term="sysadmin" scheme="//jellynian.me/categories/sysadmin/"/>
+    
+    
+      <category term="sysadmin" scheme="//jellynian.me/tags/sysadmin/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>通配符SSL证书是否支持3级子域名</title>
+    <link href="//jellynian.me/2018/03/27/2018-01-27-%E9%80%9A%E9%85%8D%E7%AC%A6SSL%E8%AF%81%E4%B9%A6%E6%98%AF%E5%90%A6%E6%94%AF%E6%8C%813%E7%BA%A7%E5%AD%90%E5%9F%9F%E5%90%8D/"/>
+    <id>//jellynian.me/2018/03/27/2018-01-27-通配符SSL证书是否支持3级子域名/</id>
+    <published>2018-03-27T08:41:23.856Z</published>
+    <updated>2018-03-27T08:41:23.856Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p>所有品牌的通配符SSL证书只能支持域名本身及下一级的所有子域名，而不是无限级支持子域名。</p></blockquote><p>举例说明：</p><ol><li><p>用户为domain.com购买通配符SSL证书 <code>*.domain.com</code>，该证书可以保护</p><p> mail.domain.com<br> login.domain.com<br> test.domain.com<br> vpn.domain.com</p></li></ol><p>但该证书无法保护3级子<code>yum.mail.doamin.com</code>，对于该域名证书无效。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;blockquote&gt;
+&lt;p&gt;所有品牌的通配符SSL证书只能支持域名本身及下一级的所有子域名，而不是无限级支持子域名。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;举例说明：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;用户为domain.com购买通配符SSL证书 &lt;code&gt;*.doma
+      
+    
+    </summary>
+    
+      <category term="sysadmin" scheme="//jellynian.me/categories/sysadmin/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>openstack kali linux 镜像制作</title>
+    <link href="//jellynian.me/2018/03/27/2018-02-7-openstack-build-kali-image/"/>
+    <id>//jellynian.me/2018/03/27/2018-02-7-openstack-build-kali-image/</id>
+    <published>2018-03-27T08:41:23.856Z</published>
+    <updated>2018-03-27T08:41:23.856Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><blockquote><p>公司网络安全部门需要在我司私有云平台上搭建kali linux的云主机，用以进行渗透测试等服务，在互联网上搜索了很久也没有发现有现成的镜像可以使用，因此就自己制作了,镜像下载地址:<a href="http://jellynian.ufile.ucloud.com.cn/kali_xfce.qcow2" target="_blank" rel="noopener">http://jellynian.ufile.ucloud.com.cn/kali_xfce.qcow2</a>, 镜像默认用户<code>debian</code>默认密码<code>kalidebian</code> 在此附上具体的制作教程。</p></blockquote><h1 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h1><p>操作系统: ubuntu操作系统（作者使用的是ubuntu16.04 主机IP为：10.0.3.102）<br>到任意一个镜像站下载kali linux的镜像，这里使用的是南阳理工学院的开源镜像<br><a href="https://mirror.nyist.edu.cn/kali-images/" target="_blank" rel="noopener">https://mirror.nyist.edu.cn/kali-images/</a></p><pre><code># 安装virsh  libvirt-binapt-get install libvirt-bin qemu-kvm  qemu-utils -y# 下载基础镜像(存储目录为 /var/lib/libvirt/)wget  https://mirror.nyist.edu.cn/kali-images/current/kali-linux-xfce-2018.1-amd64.iso \ -O /var/lib/libvirt/kali-linux-xfce-2018.1-amd64.iso </code></pre><h1 id="创建img-磁盘"><a href="#创建img-磁盘" class="headerlink" title="创建img 磁盘"></a>创建img 磁盘</h1><p>执行以下命令创建qcow2磁盘</p><pre><code>qemu-img create -f qcow2 /var/lib/libvirt/kali.qcow2 10G   # 由于kali预装了大量软件，经测试 10G的基础磁盘大小是较为合适的，#作者曾经测试过2G，3G，5G等大小都失败了（或许是作者的测试方式有问题，您可以做更多的尝试）</code></pre><h1 id="开始制作"><a href="#开始制作" class="headerlink" title="开始制作"></a>开始制作</h1><pre><code>virt-install --virt-type kvm --name kali --ram 1024 \  --cdrom=/var/lib/libvirt/kali-linux-xfce-2018.1-amd64.iso \  --disk /var/lib/libvirt/kali.qcow2 \  --network network=default \  --graphics vnc,listen=0.0.0.0 --noautoconsole \  --os-type=linux --os-variant=debianwheezy</code></pre><h2 id="使用vnc客户端连接vnc"><a href="#使用vnc客户端连接vnc" class="headerlink" title="使用vnc客户端连接vnc"></a>使用vnc客户端连接vnc</h2><p>在vnc客户端直接输入宿主机的IP 即可连接,按照正常的流程安装此虚拟机，不过要注意的是磁盘分区不要使用lvm分区，将所有文件放入一个分区即可，使用整个磁盘,因为openstack在创建虚拟机时默认是自动分区，剩余的磁盘空间可以自动的加入此分区，如果你选择了lvm或者分了多个分区可能会导致自动分区无法正常工作(此为本人测试后的结果，可能存在一定的疏漏)。安装完成后,镜像会关机退出，我们使用 <code>virsh list --all</code> 来查看当前运行的所有机器，并使用<code>virsh start kali</code> 来启动该机器并再次使用vnc连接</p><pre><code>root@cagetest:~# virsh list --all Id    Name                           State---------------------------------------------------- -     kali                           shut offroot@cagetest:~# virsh start kaliDomain kali started</code></pre><h2 id="安装-cloud-init"><a href="#安装-cloud-init" class="headerlink" title="安装 cloud-init"></a>安装 cloud-init</h2><p>cloud-init 脚本将在虚拟机启动的时候搜寻元数据服务获取公钥。公钥将会放在镜像默认用户内。<br>安装 cloud-init 软件包：</p><pre><code># apt-get install cloud-init</code></pre><h3 id="配置数据源"><a href="#配置数据源" class="headerlink" title="配置数据源"></a>配置数据源</h3><p>在创建 Ubuntu 镜像时，cloud-init 必须明确的配置元数据源。OpenStack 元数据服务仿效 Amazon EC2 元数据服务。<br>运行 <code>dpkg-reconfigure</code> 命令设置镜像 cloud-init 软件包使用的元数据源。当屏幕出现提示时，选择 EC2 数据源。</p><pre><code># dpkg-reconfigure cloud-init</code></pre><h3 id="配置账户"><a href="#配置账户" class="headerlink" title="配置账户"></a>配置账户</h3><p>不同的发行版保存的账户不同，在基于 Ubuntu 的虚拟机，账户是 ubuntu ，基于 Fedora 的虚拟机，账户是 ec2-user ,基于debian的虚拟机账户是debian，因此kali的cloud-init安装后默认的用户是debian。</p><p>你可以编辑 /etc/cloud/cloud.cfg 文件修改 cloud-init 使用的账户名，例如，添加以下这行到配置文件，公钥将会存放到debian用户下。</p><pre><code>default_user:    name: debian</code></pre><h3 id="配置镜像源"><a href="#配置镜像源" class="headerlink" title="配置镜像源"></a>配置镜像源</h3><p>修改 <code>/etc/cloud/cloud.cfg</code> 中的配置，这里改为我母校南阳理工学院的镜像源<br><img src="/img/sourcelist.png" alt=""></p><p> 关闭虚拟机<br>在虚拟机内，以root用户运行：</p><pre><code># /sbin/shutdown -h now</code></pre><h1 id="清理（删除-MAC-地址相关信息）"><a href="#清理（删除-MAC-地址相关信息）" class="headerlink" title="清理（删除 MAC 地址相关信息）"></a>清理（删除 MAC 地址相关信息）</h1><p>操作系统会在<code>/etc/sysconfig/network-scripts/ifcfg-eth0</code> 和 <code>/etc/udev/rules.d/70-persistent-net.rules</code> 这类文件记录下网卡MAC地址，但是，虚拟机的网卡MAC地址在每次虚拟机创建的时候都会不同，因此这些信息必须从配置文件删除掉。</p><p>目前有 virt-sysprep 工具可以完成清理虚拟机镜像内的 MAC 地址相关的信息。</p><pre><code># apt-get install libguestfs-tools  #你可能需要先安装这个安装包# virt-sysprep -d kali</code></pre><h1 id="删除-libvirt-虚拟机域"><a href="#删除-libvirt-虚拟机域" class="headerlink" title="删除 libvirt 虚拟机域"></a>删除 libvirt 虚拟机域</h1><p>现在你可以上传虚拟机镜像到镜像服务了，所以不再需要 libvirt 来管理虚拟机镜像，使用 <code>virsh undefine vm-image</code> 命令来完成。</p><pre><code># virsh undefine kali</code></pre><h1 id="镜像准备完成"><a href="#镜像准备完成" class="headerlink" title="镜像准备完成"></a>镜像准备完成</h1><p>前面你使用 qemu-img create 命令创建的镜像已经准备好可以上传了，你可以上传 <code>/var/lib/libvirt/kali.qcow2</code> 文件到 Openstack 镜像服务。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;概述&quot;&gt;&lt;a href=&quot;#概述&quot; class=&quot;headerlink&quot; title=&quot;概述&quot;&gt;&lt;/a&gt;概述&lt;/h1&gt;&lt;blockquote&gt;
+&lt;p&gt;公司网络安全部门需要在我司私有云平台上搭建kali linux的云主机，用以进行渗透测试等服务，在互联网上搜索了很
+      
+    
+    </summary>
+    
+    
+      <category term="sysadmin" scheme="//jellynian.me/tags/sysadmin/"/>
+    
+      <category term="openstack" scheme="//jellynian.me/tags/openstack/"/>
+    
+  </entry>
+  
+</feed>
